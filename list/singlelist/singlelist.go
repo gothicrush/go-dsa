@@ -16,19 +16,19 @@ func newNode(v interface{}, n *listNode) *listNode {
 	}
 }
 
-type list struct {
+type List struct {
 	dummyNode *listNode
 	size int
 }
 
-func NewList() *list {
-	return &list {
+func New() *List {
+	return &List {
 		dummyNode: newNode(0, nil),
 		size: 0,
 	}
 }
 
-func (li *list) Add(index int, v interface{}) {
+func (li *List) Add(index int, v interface{}) {
 	if index < 0 || index > li.size {
 		panic("index out of bounds")
 	}
@@ -44,7 +44,7 @@ func (li *list) Add(index int, v interface{}) {
 	li.size ++
 }
 
-func (li *list) Remove(index int) interface{} {
+func (li *List) Remove(index int) interface{} {
 	if index < 0 || index >= li.size {
 		panic("index out of bounds")
 	}
@@ -64,7 +64,7 @@ func (li *list) Remove(index int) interface{} {
 	return val
 }
 
-func (li *list) Set(index int, v interface{}) {
+func (li *List) Set(index int, v interface{}) {
 	if index < 0 || index >= li.size {
 		panic("index out of bounds")
 	}
@@ -78,7 +78,7 @@ func (li *list) Set(index int, v interface{}) {
 	cur.data = v
 }
 
-func (li *list) Get(index int) interface{} {
+func (li *List) Get(index int) interface{} {
 	if index < 0 || index >= li.size {
 		panic("index out of bounds")
 	}
@@ -92,7 +92,7 @@ func (li *list) Get(index int) interface{} {
 	return cur.data
 }
 
-func (li *list) Contains(v interface{}) bool {
+func (li *List) Contains(v interface{}) bool {
 	cur := li.dummyNode.next
 
 	for cur != nil {
@@ -105,7 +105,7 @@ func (li *list) Contains(v interface{}) bool {
 	return false
 }
 
-func (li *list) IndexOf(v interface{}) int {
+func (li *List) IndexOf(v interface{}) int {
 	cur := li.dummyNode.next
 
 	for i := 0; cur != nil; i++ {
@@ -118,15 +118,15 @@ func (li *list) IndexOf(v interface{}) int {
 	return -1
 }
 
-func (li *list) Empty() bool {
+func (li *List) Empty() bool {
 	return li.size == 0
 }
 
-func (li *list) Size() int {
+func (li *List) Size() int {
 	return li.size
 }
 
-func (li *list) String() string {
+func (li *List) String() string {
 	cur := li.dummyNode.next
 
 	var str string = "[ "
