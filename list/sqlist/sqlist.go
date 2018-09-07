@@ -4,19 +4,19 @@ import (
 	"fmt"
 )
 
-type sqlist struct {
+type List struct {
 	data []interface{}
 	size int
 }
 
-func NewList() *sqlist {
-	return &sqlist{
+func New() *List {
+	return &List{
 		data: make([]interface{}, 10),
 		size: 0,
 	}
 }
 
-func (li *sqlist) Add(index int, v interface{}) {
+func (li *List) Add(index int, v interface{}) {
 
 	if index < 0 || index > li.size {
 		panic("index out of bounds")
@@ -35,7 +35,7 @@ func (li *sqlist) Add(index int, v interface{}) {
 	li.size++
 }
 
-func (li *sqlist) Remove(index int) interface{} {
+func (li *List) Remove(index int) interface{} {
 
 	if index < 0 || index >= li.size {
 		panic("index out of bounds")
@@ -56,7 +56,7 @@ func (li *sqlist) Remove(index int) interface{} {
 	return ret
 }
 
-func (li *sqlist) Set(index int, v interface{}) {
+func (li *List) Set(index int, v interface{}) {
 	if index < 0 || index >= li.size {
 		panic("index out of bounds")
 	}
@@ -64,7 +64,7 @@ func (li *sqlist) Set(index int, v interface{}) {
 	li.data[index] = v
 }
 
-func (li *sqlist) Get(index int) interface{} {
+func (li *List) Get(index int) interface{} {
 	if index < 0 || index >= li.size {
 		panic("index out of bounds")
 	}
@@ -72,7 +72,7 @@ func (li *sqlist) Get(index int) interface{} {
 	return li.data[index]
 }
 
-func (li *sqlist) Contains(v interface{}) bool {
+func (li *List) Contains(v interface{}) bool {
 
 	for _, item := range li.data {
 		if item == v {
@@ -83,7 +83,7 @@ func (li *sqlist) Contains(v interface{}) bool {
 	return false
 }
 
-func (li *sqlist) IndexOf(v interface{}) int {
+func (li *List) IndexOf(v interface{}) int {
 
 	for index, item := range li.data {
 		if item == v {
@@ -94,15 +94,15 @@ func (li *sqlist) IndexOf(v interface{}) int {
 	return -1
 }
 
-func (li *sqlist) Empty() bool {
+func (li *List) Empty() bool {
 	return li.size == 0
 }
 
-func (li *sqlist) Size() int {
+func (li *List) Size() int {
 	return li.size
 }
 
-func (li *sqlist) String() string {
+func (li *List) String() string {
 
 	ret := "[ "
 
@@ -124,7 +124,7 @@ func (li *sqlist) String() string {
 	return ret
 }
 
-func resize(li *sqlist, newSize int) {
+func resize(li *List, newSize int) {
 
 	newList := make([]interface{}, newSize)
 

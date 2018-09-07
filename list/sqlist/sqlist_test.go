@@ -6,7 +6,7 @@ import (
 
 func TestInit(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	str := li.String()
 
@@ -17,7 +17,7 @@ func TestInit(t *testing.T) {
 
 func TestAdd(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	li.Add(0, 0)
 	li.Add(1, 1)
@@ -41,7 +41,7 @@ func TestAdd(t *testing.T) {
 
 func TestRemove(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	li.Add(0, 0)
 	li.Add(1, 1)
@@ -69,7 +69,7 @@ func TestRemove(t *testing.T) {
 
 func TestSet(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	li.Add(0, 0)
 	li.Add(1, 1)
@@ -89,7 +89,7 @@ func TestSet(t *testing.T) {
 
 func TestGet(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	li.Add(0, 0)
 	li.Add(1, 1)
@@ -113,7 +113,7 @@ func TestGet(t *testing.T) {
 
 func TestContains(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	li.Add(0, 0)
 	li.Add(1, 1)
@@ -137,7 +137,7 @@ func TestContains(t *testing.T) {
 
 func TestIndexOf(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	li.Add(0, 0)
 	li.Add(1, "gothicrush")
@@ -170,7 +170,7 @@ func TestIndexOf(t *testing.T) {
 
 func TestEmpty(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	b := li.Empty()
 
@@ -189,7 +189,7 @@ func TestEmpty(t *testing.T) {
 
 func TestSize(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	size := li.Size()
 
@@ -216,7 +216,7 @@ func TestSize(t *testing.T) {
 
 func TestResize(t *testing.T) {
 
-	li := NewList()
+	li := New()
 
 	for i := 0; i < 21; i++ {
 		li.Add(i,i)
