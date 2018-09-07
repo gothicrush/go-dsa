@@ -18,11 +18,11 @@ func New(comparator assist.Comparator) *maxheap {
 	}
 }
 
-func Heapify(li *[]interface{}, comparator assist.Comparator) *maxheap {
+func Heapify(li []interface{}, comparator assist.Comparator) *maxheap {
 
 	newList := list.New()
 
-	for index, val := range *li {
+	for index, val := range li {
 		newList.Add(index, val)
 	}
 
@@ -90,25 +90,21 @@ func (heap *maxheap) shiftDown(k int) {
 
 		var lor int = leftChild(k)
 
-		if lor+1 < heap.data.Size() {
-
-			leftVal := heap.data.Get(lor)
-			rightVal := heap.data.Get(lor + 1)
-
-			if assist.Compare(leftVal,rightVal,heap.comparator) < 0 {
-				lor += 1
-			}
+		if lor+1 < heap.data.Size() && assist.Compare(heap.data.Get(lor),
+				                                      heap.data.Get(lor + 1),
+				                                      heap.comparator) < 0 {
+			lor += 1
 		}
 
-		var kVal interface{} = heap.data.Get(k)
-		var lorVal interface{} = heap.data.Get(lor)
-
-		if assist.Compare(kVal,lorVal,heap.comparator) >= 0 {
+		if assist.Compare(heap.data.Get(k),
+			              heap.data.Get(lor),
+			              heap.comparator) >= 0 {
 			break
 		}
 
-		heap.data.Set(k, lorVal)
-		heap.data.Set(lor, kVal)
+		temp := heap.data.Get(k)
+		heap.data.Set(k, heap.data.Get(lor))
+		heap.data.Set(lor, temp)
 
 		k = lor
 	}
@@ -116,15 +112,13 @@ func (heap *maxheap) shiftDown(k int) {
 
 func (heap *maxheap) shiftUp(k int) {
 
-	for k > 0 {
+	for k > 0 && assist.Compare(heap.data.Get(parents(k)),
+			                    heap.data.Get(k),
+			                    heap.comparator) < 0 {
 
-		var pVal interface{} = heap.data.Get(parents(k))
-		var kVal interface{} = heap.data.Get(k)
-
-		if assist.Compare(pVal,kVal,heap.comparator) < 0 {
-			heap.data.Set(parents(k), &kVal)
-			heap.data.Set(k, &pVal)
-		}
+			temp := heap.data.Get(parents(k))
+			heap.data.Set(parents(k), heap.data.Get(k))
+			heap.data.Set(k, temp)
 
 		k = parents(k)
 	}
