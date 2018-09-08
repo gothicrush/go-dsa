@@ -5,20 +5,20 @@ import (
 	list "../../list/sqlist"
 )
 
-type maxheap struct {
+type Heap struct {
 	data *list.List
 	comparator assist.Comparator
 }
 
-func New(comparator assist.Comparator) *maxheap {
+func New(comparator assist.Comparator) *Heap {
 
-	return &maxheap{
+	return &Heap{
 		data: list.New(),
 		comparator: comparator,
 	}
 }
 
-func Heapify(li []interface{}, comparator assist.Comparator) *maxheap {
+func Heapify(li []interface{}, comparator assist.Comparator) *Heap {
 
 	newList := list.New()
 
@@ -26,7 +26,7 @@ func Heapify(li []interface{}, comparator assist.Comparator) *maxheap {
 		newList.Add(index, val)
 	}
 
-	heap := &maxheap{
+	heap := &Heap{
 		data: newList,
 		comparator: comparator,
 	}
@@ -40,14 +40,14 @@ func Heapify(li []interface{}, comparator assist.Comparator) *maxheap {
 	return heap
 }
 
-func (heap *maxheap) Add(v interface{}) {
+func (heap *Heap) Add(v interface{}) {
 
 	heap.data.Add(heap.data.Size(), v)
 
 	heap.shiftUp(heap.data.Size() - 1)
 }
 
-func (heap *maxheap) ExtractMax() interface{} {
+func (heap *Heap) ExtractMax() interface{} {
 
 	var ret interface{} = heap.data.Get(0)
 
@@ -60,12 +60,12 @@ func (heap *maxheap) ExtractMax() interface{} {
 	return ret
 }
 
-func (heap *maxheap) PeekMax() interface{} {
+func (heap *Heap) PeekMax() interface{} {
 
 	return heap.data.Get(0)
 }
 
-func (heap *maxheap) Replace(v interface{}) interface{} {
+func (heap *Heap) Replace(v interface{}) interface{} {
 
 	var ret interface{} = heap.data.Get(0)
 
@@ -76,15 +76,15 @@ func (heap *maxheap) Replace(v interface{}) interface{} {
 	return ret
 }
 
-func (heap *maxheap) Size() int {
+func (heap *Heap) Size() int {
 	return heap.data.Size()
 }
 
-func (heap *maxheap) Empty() bool {
+func (heap *Heap) Empty() bool {
 	return heap.data.Empty()
 }
 
-func (heap *maxheap) shiftDown(k int) {
+func (heap *Heap) shiftDown(k int) {
 
 	for leftChild(k) < heap.data.Size() {
 
@@ -110,7 +110,7 @@ func (heap *maxheap) shiftDown(k int) {
 	}
 }
 
-func (heap *maxheap) shiftUp(k int) {
+func (heap *Heap) shiftUp(k int) {
 
 	for k > 0 && assist.Compare(heap.data.Get(parents(k)),
 			                    heap.data.Get(k),

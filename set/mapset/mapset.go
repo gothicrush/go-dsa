@@ -4,35 +4,35 @@ import (
 	"fmt"
 )
 
-type set struct {
+type Set struct {
 	data map[interface{}]bool
 }
 
-func New() *set {
+func New() *Set {
 
-	return &set{
+	return &Set{
 		data: make(map[interface{}]bool, 10),
 	}
 }
 
-func (s *set) Add(v interface{}) {
+func (s *Set) Add(v interface{}) {
 
 	s.data[v] = false
 }
 
-func (s *set) Remove(v interface{}) {
+func (s *Set) Remove(v interface{}) {
 
 	delete(s.data, v)
 }
 
-func (s *set) Contains(v interface{}) bool {
+func (s *Set) Contains(v interface{}) bool {
 
 	_, ok := s.data[v]
 
 	return ok
 }
 
-func (s *set) Equals(ss *set) bool {
+func (s *Set) Equals(ss *Set) bool {
 
 	len1, len2 := len(s.data), len(ss.data)
 
@@ -52,7 +52,7 @@ func (s *set) Equals(ss *set) bool {
 	return true
 }
 
-func (s *set) Subset(ss *set) bool {
+func (s *Set) Subset(ss *Set) bool {
 
 	len1, len2 := len(s.data), len(ss.data)
 
@@ -73,7 +73,7 @@ func (s *set) Subset(ss *set) bool {
 
 }
 
-func (s *set) Diff(ss *set) *set {
+func (s *Set) Diff(ss *Set) *Set {
 
 	sss := New()
 
@@ -98,7 +98,7 @@ func (s *set) Diff(ss *set) *set {
 	return sss
 }
 
-func (s *set) Inter(ss *set) *set {
+func (s *Set) Inter(ss *Set) *Set {
 
 	sss := New()
 
@@ -114,7 +114,7 @@ func (s *set) Inter(ss *set) *set {
 	return sss
 }
 
-func (s *set) Union(ss *set) *set {
+func (s *Set) Union(ss *Set) *Set {
 
 	sss := New()
 
@@ -131,7 +131,7 @@ func (s *set) Union(ss *set) *set {
 	return sss
 }
 
-func (s *set) Clear() {
+func (s *Set) Clear() {
 
 	for k, _ := range s.data {
 
@@ -140,17 +140,17 @@ func (s *set) Clear() {
 
 }
 
-func (s *set) Size() int {
+func (s *Set) Size() int {
 
 	return len(s.data)
 }
 
-func (s *set) Empty() bool {
+func (s *Set) Empty() bool {
 
 	return len(s.data) == 0
 }
 
-func (s *set) String() string {
+func (s *Set) String() string {
 
 	str := "( "
 

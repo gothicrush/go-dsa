@@ -4,20 +4,20 @@ import (
     "fmt"
 )
 
-type slicestack struct {
+type Stack struct {
 	li []interface{}
 	size int
 }
 
-func New() *slicestack {
+func New() *Stack {
 
-	return &slicestack {
+	return &Stack {
 		li: make([]interface{},10),
 		size: 0,
 	}
 }
 
-func (stack *slicestack) Push(v interface{}) {
+func (stack *Stack) Push(v interface{}) {
 
 	if stack.size == len(stack.li) {
 		var newSlice []interface{} = make([]interface{}, 2 * len(stack.li))
@@ -29,7 +29,7 @@ func (stack *slicestack) Push(v interface{}) {
 	stack.size++	
 }
 
-func (stack *slicestack) Pop() {
+func (stack *Stack) Pop() {
 
 	stack.size--
 
@@ -40,19 +40,19 @@ func (stack *slicestack) Pop() {
 	}
 }
 
-func (stack *slicestack) Top() interface{} {
+func (stack *Stack) Top() interface{} {
 	return stack.li[stack.size-1]
 }
 
-func (stack *slicestack) Size() int {
+func (stack *Stack) Size() int {
 	return stack.size
 }
 
-func (stack *slicestack) Empty() bool {
+func (stack *Stack) Empty() bool {
 	return stack.size == 0
 }
 
-func (stack *slicestack) String() string {
+func (stack *Stack) String() string {
 
 	str := "[ "
 

@@ -4,43 +4,43 @@ import (
     list "../../list/singlelist"
 )
 
-type linkedqueue struct {
+type Queue struct {
 	li *list.List
 }
 
-func New() *linkedqueue {
+func New() *Queue {
 
-	return &linkedqueue {
+	return &Queue {
 		li: list.New(),
 	}
 }
 
-func (queue *linkedqueue) EnQueue(v interface{}) {
+func (queue *Queue) EnQueue(v interface{}) {
 
 	queue.li.Add(queue.li.Size(),v)
 }
 
-func (queue *linkedqueue) DeQueue() {
+func (queue *Queue) DeQueue() {
 
 	queue.li.Remove(0)
 }
 
-func (queue *linkedqueue) Head() interface{} {
+func (queue *Queue) Head() interface{} {
 
 	return queue.li.Get(0)
 }
 
-func (queue *linkedqueue) Size() int {
+func (queue *Queue) Size() int {
 
 	return queue.li.Size()
 }
 
-func (queue *linkedqueue) Empty() bool {
+func (queue *Queue) Empty() bool {
 
 	return queue.li.Empty()
 }
 
-func (queue *linkedqueue) String() string {
+func (queue *Queue) String() string {
 
 	str := queue.li.String()
 

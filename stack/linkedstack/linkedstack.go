@@ -4,43 +4,43 @@ import (
     list "../../list/singlelist"
 )
 
-type linkedstack struct {
+type Stack struct {
 	li *list.List
 }
 
-func New() *linkedstack {
+func New() *Stack {
 
-	return &linkedstack {
+	return &Stack {
 		li: list.New(),
 	}
 }
 
-func (stack *linkedstack) Push(v interface{}) {
+func (stack *Stack) Push(v interface{}) {
 
 	stack.li.Add(stack.li.Size(),v)
 }
 
-func (stack *linkedstack) Pop() {
+func (stack *Stack) Pop() {
 
 	stack.li.Remove(stack.li.Size()-1)
 }
 
-func (stack *linkedstack) Top() interface{} {
+func (stack *Stack) Top() interface{} {
 
 	return stack.li.Get(stack.li.Size()-1)
 }
 
-func (stack *linkedstack) Size() int {
+func (stack *Stack) Size() int {
 
 	return stack.li.Size()
 }
 
-func (stack *linkedstack) Empty() bool {
+func (stack *Stack) Empty() bool {
 
 	return stack.li.Size() == 0
 }
 
-func (stack *linkedstack) String() string {
+func (stack *Stack) String() string {
 
 	str := stack.li.String()
 	str = str[:len(str)-1] + "> stack top"
