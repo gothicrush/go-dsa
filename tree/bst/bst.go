@@ -1,7 +1,6 @@
 package bst
 
 import (
-    //"../../stack/linkedstack"
     "../../queue/linkedqueue"
     "../../assist"
 )
@@ -88,7 +87,7 @@ func (bst *BST) remove(nd *node, v interface{}) *node {
 	return successor
 }
 
-func (bst *BST) RemoveMin(v interface{}) interface{} {
+func (bst *BST) RemoveMin() interface{} {
 
 	var minValue interface{} = bst.GetMin()
 
@@ -111,7 +110,7 @@ func (bst *BST) removeMin(nd *node) *node {
 	return nd
 }
 
-func (bst *BST) RemoveMax(v interface{}) interface{} {
+func (bst *BST) RemoveMax() interface{} {
 
 	var maxValue interface{} = bst.GetMax()
 
@@ -134,49 +133,51 @@ func (bst *BST) removeMax(nd *node) *node {
 	return nd
 }
 
-func (bst *BST) PreOrder(visitor assist.Visitor) {
-	bst.preOrder(bst.root, visitor)
+func (bst *BST) PreOrder(ret *[]interface{}) {
+
+	bst.preOrder(bst.root, ret)
 }
 
-func (bst *BST) preOrder(nd *node, visitor assist.Visitor) {
+func (bst *BST) preOrder(nd *node, ret *[]interface{}) {
 	if nd == nil {
 		return
 	}
 
-	visitor(nd)
-	bst.preOrder(nd.left, visitor)
-	bst.preOrder(nd.right, visitor )
+	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
+	bst.preOrder(nd.left, ret)
+	bst.preOrder(nd.right, ret)
 }
 
-func (bst *BST) InOrder(visitor assist.Visitor) {
-	bst.inOrder(bst.root, visitor)
+func (bst *BST) InOrder(ret *[]interface{}) {
+
+	bst.inOrder(bst.root, ret)
 } 
 
-func (bst *BST) inOrder(nd *node, visitor assist.Visitor) {
+func (bst *BST) inOrder(nd *node, ret *[]interface{}) {
 	if nd == nil {
 		return
 	}
 
-	bst.inOrder(nd.left, visitor)
-	visitor(nd)
-	bst.inOrder(nd.right, visitor)
+	bst.inOrder(nd.left, ret)
+	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
+	bst.inOrder(nd.right, ret)
 }
 
-func (bst *BST) PostOrder(visitor assist.Visitor) {
-	bst.postOrder(bst.root, visitor)
+func (bst *BST) PostOrder(ret *[]interface{}) {
+	bst.postOrder(bst.root, ret)
 } 
 
-func (bst *BST) postOrder(nd *node, visitor assist.Visitor) {
+func (bst *BST) postOrder(nd *node, ret *[]interface{}) {
 	if nd == nil {
 		return
 	}
 
-	bst.postOrder(nd.left, visitor)
-	bst.postOrder(nd.right, visitor)
-	visitor(nd)
+	bst.postOrder(nd.left, ret)
+	bst.postOrder(nd.right, ret)
+	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
 }
 
-func (bst *BST) LevelOrder(visitor assist.Visitor) {
+func (bst *BST) LevelOrder(ret *[]interface{}) {
 
 	if bst.root == nil {
 		return
@@ -186,12 +187,12 @@ func (bst *BST) LevelOrder(visitor assist.Visitor) {
 
 	queue.EnQueue(bst.root)
 
-	for !bst.Empty() {
+	for !queue.Empty() {
 
 		var nd *node = queue.Head().(*node)
 		queue.DeQueue()
 
-		visitor(nd)
+		*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
 
 		if nd.left != nil {
 			queue.EnQueue(nd.left)
@@ -264,6 +265,20 @@ func (bst *BST) Empty() bool {
 
 // func (bst *BST) String() string {
 
+// 	var stringBuilder []rune
+
+// 	bst.rstring(bst.root, &stringBuilder)
+
+// 	return string(stringBuilder)
+// }
+
+// func (bst *BST) rstring(nd *node, sb *[]rune) {
+
+// 	if nd == nil {
+// 		return
+// 	}
+
+// 	*sb = append(*sb, fmt.Sprintnd.data)
 // }
 
 // TODO: 非递归版 前中后序遍历
