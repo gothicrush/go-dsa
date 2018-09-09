@@ -263,24 +263,6 @@ func (bst *BST) Empty() bool {
 	return bst.size == 0
 }
 
-// func (bst *BST) String() string {
-
-// 	var stringBuilder []rune
-
-// 	bst.rstring(bst.root, &stringBuilder)
-
-// 	return string(stringBuilder)
-// }
-
-// func (bst *BST) rstring(nd *node, sb *[]rune) {
-
-// 	if nd == nil {
-// 		return
-// 	}
-
-// 	*sb = append(*sb, fmt.Sprintnd.data)
-// }
-
 // TODO: 非递归版 前中后序遍历
 // TODO: floor
 // TODO: ceil
