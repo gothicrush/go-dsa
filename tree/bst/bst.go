@@ -63,28 +63,38 @@ func (bst *BST) remove(nd *node, v interface{}) *node {
 		return nil
 	}
 
-	if nd.left == nil {
-		var rightNode *node = nd.right
-		nd.right = nil
-		bst.size--
-		return rightNode
-	}
+	cmp := assist.Compare(v, nd.data, bst.comparator)
+	if cmp > 0 {
+		nd.right = bst.remove(nd.right, v)
+		return nd
+	} else if cmp < 0 {
+		nd.left = bst.remove(nd.left, v)
+		return nd
+	} else { 
 
-	if nd.right == nil {
-		var leftNode *node = nd.left
+		if nd.left == nil {
+			var rightNode *node = nd.right
+			nd.right = nil
+			bst.size--
+			return rightNode
+		}
+
+		if nd.right == nil {
+			var leftNode *node = nd.left
+			nd.left = nil
+			bst.size--
+			return leftNode
+		}
+
+		var successor *node = bst.getMinNode(nd.right)
+		successor.right = bst.removeMin(nd.right) // 已经 size-- 了
+		successor.left = nd.left
+
 		nd.left = nil
-		bst.size--
-		return leftNode
+		nd.right = nil
+
+		return successor
 	}
-
-	var successor *node = bst.getMinNode(nd.right)
-	successor.right = bst.removeMin(nd.right) // 已经 size-- 了
-	successor.left = nd.left
-
-	nd.left = nil
-	nd.right = nil
-
-	return successor
 }
 
 func (bst *BST) RemoveMin() interface{} {
@@ -133,9 +143,13 @@ func (bst *BST) removeMax(nd *node) *node {
 	return nd
 }
 
-func (bst *BST) PreOrder(ret *[]interface{}) {
+func (bst *BST) PreOrder() []interface{} {
 
-	bst.preOrder(bst.root, ret)
+	var ret []interface{}
+
+	bst.preOrder(bst.root, &ret)
+
+	return ret
 }
 
 func (bst *BST) preOrder(nd *node, ret *[]interface{}) {
@@ -143,14 +157,18 @@ func (bst *BST) preOrder(nd *node, ret *[]interface{}) {
 		return
 	}
 
-	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
+	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用指针
 	bst.preOrder(nd.left, ret)
 	bst.preOrder(nd.right, ret)
 }
 
-func (bst *BST) InOrder(ret *[]interface{}) {
+func (bst *BST) InOrder() []interface{} {
 
-	bst.inOrder(bst.root, ret)
+	var ret []interface{}
+
+	bst.inOrder(bst.root, &ret)
+
+	return ret
 } 
 
 func (bst *BST) inOrder(nd *node, ret *[]interface{}) {
@@ -159,12 +177,17 @@ func (bst *BST) inOrder(nd *node, ret *[]interface{}) {
 	}
 
 	bst.inOrder(nd.left, ret)
-	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
+	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用指针
 	bst.inOrder(nd.right, ret)
 }
 
-func (bst *BST) PostOrder(ret *[]interface{}) {
-	bst.postOrder(bst.root, ret)
+func (bst *BST) PostOrder() []interface{} {
+
+	var ret []interface{}
+
+	bst.postOrder(bst.root, &ret)
+
+	return ret
 } 
 
 func (bst *BST) postOrder(nd *node, ret *[]interface{}) {
@@ -174,13 +197,15 @@ func (bst *BST) postOrder(nd *node, ret *[]interface{}) {
 
 	bst.postOrder(nd.left, ret)
 	bst.postOrder(nd.right, ret)
-	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
+	*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用指针
 }
 
-func (bst *BST) LevelOrder(ret *[]interface{}) {
+func (bst *BST) LevelOrder() []interface{} {
+
+	var ret []interface{}
 
 	if bst.root == nil {
-		return
+		return ret
 	}
 
 	var queue *linkedqueue.Queue = linkedqueue.New()
@@ -192,7 +217,7 @@ func (bst *BST) LevelOrder(ret *[]interface{}) {
 		var nd *node = queue.Head().(*node)
 		queue.DeQueue()
 
-		*ret = append(*ret, nd.data) // 因为 append 可能使形参指向新的 切片，所以必须要用切片
+		ret = append(ret, nd.data)
 
 		if nd.left != nil {
 			queue.EnQueue(nd.left)
@@ -202,6 +227,8 @@ func (bst *BST) LevelOrder(ret *[]interface{}) {
 			queue.EnQueue(nd.right)
 		}
 	}
+
+	return ret
 }
 
 func (bst *BST) Contains(v interface{}) bool {
@@ -261,6 +288,19 @@ func (bst *BST) Size() int {
 
 func (bst *BST) Empty() bool {
 	return bst.size == 0
+}
+
+func (bst *BST) isBST() bool {
+
+	var keys []interface{} = bst.InOrder()
+
+	for i := 1; i < len(keys); i++ {
+		if assist.Compare(keys[i-1], keys[i], bst.comparator) > 0 {
+			return false
+		}
+	}
+
+	return true
 }
 
 // TODO: 非递归版 前中后序遍历
