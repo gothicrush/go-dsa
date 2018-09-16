@@ -1,7 +1,8 @@
 package sort
 
 import (
-    "../assist"
+    "../../assist"
+    "../../heap/minheap"
 )
 
 type Sort struct {
@@ -95,4 +96,66 @@ func (sort *Sort) ShellSort(list *[]interface{}) {
 
 		h = h / 3
 	}
+}
+
+func (sort *Sort)  HeapSort(list *[]interface{}) {
+    
+    heap := minheap.Heapify(*list, sort.comparator)
+
+    var newList []interface{}
+
+    for !heap.Empty() {
+    	newList = append(newList, heap.ExtractMin())
+    }
+
+    *list = newList
+}
+
+func (sort *Sort) MergeSort(list *[]interface{}) {
+
+    sort.mergeSort(list, 0, len(*list) - 1)
+}
+
+func (sort *Sort) mergeSort(list *[]interface{},  left int, right int) {
+
+    if left >= right {
+    	return
+    }
+
+    mid := ((right - left) / 2 ) + left
+
+    sort.mergeSort(list, left, mid)
+    sort.mergeSort(list, mid+1, right)
+
+    if assist.Compare((*list)[mid], (*list)[mid+1], sort.comparator) > 0 {
+        sort.merge(list, left, mid, right)
+    }
+}
+
+func (sort *Sort) merge(list *[]interface{}, left int, mid int, right int) {
+    
+    var aux []interface{} = make([]interface{}, right - left + 1)
+
+    for i := left; i <= right; i++ {
+    	aux[i-left] = (*list)[i]
+    }
+
+    var i, j = left, mid + 1
+
+    for k := left; k <= right; k++ {
+
+    	if i > mid {
+    		(*list)[k] = aux[j-left]
+    		j++
+    	} else if j > right {
+    		(*list)[k] = aux[i-left]
+    		i++
+    	} else if assist.Compare(aux[i-left], aux[j-left], sort.comparator) < 0 {
+    		(*list)[k] = aux[i-left]
+    		i++
+    	} else {
+    		(*list)[k] = aux[j - left]
+    		j++
+    	}
+    }
 }

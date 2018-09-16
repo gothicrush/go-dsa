@@ -1,7 +1,7 @@
 package sort
 
 import (
-	"../assist"
+	"../../assist"
 	"fmt"
 	"math/rand"
 	"testing"
@@ -76,6 +76,36 @@ func TestShellSort(t *testing.T) {
 		t.Errorf("TestShellSort Error: %v", check(&data))
 		printList(&data)
 	}
+}
+
+func TestHeapSort(t *testing.T) {
+
+	var data []interface{} = generateRandomList(1000)
+
+	s := New(f)
+
+	s.HeapSort(&data)
+
+	if !check(&data) {
+		t.Errorf("TestHeapSort Error: %v", check(&data))
+		printList(&data)
+	}
+}
+
+func TestMergeSort(t *testing.T) {
+
+	var data []interface{} = generateRandomList(100000)
+
+	s := New(f)
+
+	s.MergeSort(&data)
+
+	if !check(&data) {
+		t.Errorf("TestHMergeSort Error: %v", check(&data))
+		printList(&data)
+	}
+
+	printList(&data)
 }
 
 func generateRandomList(n int) []interface{} {
