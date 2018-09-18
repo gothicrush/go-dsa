@@ -24,7 +24,7 @@ func TestInit(t *testing.T) {
 
 func TestBubbleSort(t *testing.T) {
 
-	var data []interface{} = generateRandomList(1000)
+	var data []interface{} = generateRandomList(10000)
 
 	s := New(f)
 
@@ -38,7 +38,7 @@ func TestBubbleSort(t *testing.T) {
 
 func TestSelectionSort(t *testing.T) {
 
-	var data []interface{} = generateRandomList(1000)
+	var data []interface{} = generateRandomList(10000)
 
 	s := New(f)
 
@@ -52,7 +52,7 @@ func TestSelectionSort(t *testing.T) {
 
 func TestInsertionSort(t *testing.T) {
 
-	var data []interface{} = generateRandomList(1000)
+	var data []interface{} = generateRandomList(10000)
 
 	s := New(f)
 
@@ -66,7 +66,7 @@ func TestInsertionSort(t *testing.T) {
 
 func TestShellSort(t *testing.T) {
 
-	var data []interface{} = generateRandomList(1000)
+	var data []interface{} = generateRandomList(10000)
 
 	s := New(f)
 
@@ -80,7 +80,7 @@ func TestShellSort(t *testing.T) {
 
 func TestHeapSort(t *testing.T) {
 
-	var data []interface{} = generateRandomList(1000)
+	var data []interface{} = generateRandomList(1000000)
 
 	s := New(f)
 
@@ -94,18 +94,30 @@ func TestHeapSort(t *testing.T) {
 
 func TestMergeSort(t *testing.T) {
 
-	var data []interface{} = generateRandomList(100000)
+	var data []interface{} = generateRandomList(1000000)
 
 	s := New(f)
 
 	s.MergeSort(&data)
 
 	if !check(&data) {
-		t.Errorf("TestHMergeSort Error: %v", check(&data))
+		t.Errorf("TestMergeSort Error: %v", check(&data))
 		printList(&data)
 	}
+}
 
-	printList(&data)
+func TestQuickSort1(t *testing.T) {
+
+	var data []interface{} = generateRandomList(1000000)
+
+	s := New(f)
+
+	s.QuickSort1(&data)
+
+	if !check(&data) {
+		t.Errorf("TestQuickSort1 Error: %v", check(&data))
+		printList(&data)
+	}
 }
 
 func generateRandomList(n int) []interface{} {

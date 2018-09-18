@@ -159,3 +159,40 @@ func (sort *Sort) merge(list *[]interface{}, left int, mid int, right int) {
     	}
     }
 }
+
+func (sort *Sort) QuickSort1(list *[]interface{}) {
+
+	sort.quickSort1(list, 0, len(*list)-1)
+}
+
+func (sort *Sort) quickSort1(list *[]interface{}, left int, right int) {
+
+	if left >= right {
+		return
+	}
+
+	var p int = sort.partition1(list, left, right)
+	sort.quickSort1(list,left,p-1)
+	sort.quickSort1(list,p+1,right)
+}
+
+func (sort *Sort) partition1(list *[]interface{}, left int, right int) int {
+
+	var v interface{} = (*list)[left]
+
+	var j int = left
+
+	for i := left + 1; i <= right; i++ {
+		if assist.Compare((*list)[i], v, sort.comparator) < 0 {
+			j++
+
+			swap(list, i, j)
+		}
+	}
+
+	swap(list, left, j)
+
+	return j
+}
+
+func (sort *Sort) quickSort2(list *[]interface{}, left int, right int) int {}
