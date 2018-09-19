@@ -2,6 +2,7 @@ package densegraph
 
 import (
     "fmt"
+    "../graphiterator"
 )
 
 type DenseGraph struct {
@@ -63,7 +64,7 @@ func (g *DenseGraph) EdgeSize() int {
 	return g.m
 }
 
-func (g *DenseGraph) GetIterator(n int) *DenseGraphIterator {
+func (g *DenseGraph) GetIterator(n int) graphiterator.GraphIterator {
 	return &DenseGraphIterator {
 		index: -1,
 		g: g,
